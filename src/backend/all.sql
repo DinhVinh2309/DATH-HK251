@@ -264,21 +264,21 @@ INSERT INTO ReadHistory VALUES ('U0000011', 'B0000010', '2024-01-01', 180, 90);
 INSERT INTO ReadHistory VALUES ('U0000012', 'B0000011', '2024-01-01', 240, 160);
 INSERT INTO ReadHistory VALUES ('U0000005', 'B0000012', '2024-01-01', 300, 150);
 
+DELIMITER //
 
-DROP PROCEDURE IF EXISTS GetAllBooks;
+DROP PROCEDURE IF EXISTS GetAllBooks//
 CREATE PROCEDURE GetAllBooks()
 BEGIN
     SELECT book_id, title, author, cover_path FROM Books;
-END;
+END//
 
-
+DROP PROCEDURE IF EXISTS GetAllCategories//
 CREATE PROCEDURE GetAllCategories()
 BEGIN
     SELECT * FROM Categories;
-END;
+END//
 
-
-DROP PROCEDURE IF EXISTS AddBook;
+DROP PROCEDURE IF EXISTS AddBook//
 CREATE PROCEDURE AddBook(
     IN p_bookId VARCHAR(8),
     IN p_title VARCHAR(200),
@@ -288,7 +288,7 @@ CREATE PROCEDURE AddBook(
     IN p_path VARCHAR(200)
 )
 BEGIN
-    INSERT INTO books (book_id, title, author, publisher_id, cover_path, file_path)
+    INSERT INTO Books (book_id, title, author, publisher_id, cover_path, file_path)
     VALUES (p_bookId, p_title, p_author, p_publisherId, p_cover, p_path)
     ON DUPLICATE KEY UPDATE
         title = VALUES(title),
@@ -296,12 +296,9 @@ BEGIN
         publisher_id = VALUES(publisher_id),
         cover_path = VALUES(cover_path),
         file_path = VALUES(file_path);
-END;
+END//
 
-
-
-
-DROP PROCEDURE IF EXISTS AddBookCategory;
+DROP PROCEDURE IF EXISTS AddBookCategory//
 CREATE PROCEDURE AddBookCategory(
     IN p_bookId VARCHAR(8),
     IN p_categoryId VARCHAR(5)
@@ -314,10 +311,9 @@ BEGIN
     -- Insert the new category
     INSERT INTO BookCategories (book_id, category_id)
     VALUES (p_bookId, p_categoryId);
-END;
+END//
 
-
-DROP PROCEDURE IF EXISTS GetBookDetails;
+DROP PROCEDURE IF EXISTS GetBookDetails//
 CREATE PROCEDURE GetBookDetails(
     IN p_book_id VARCHAR(8),
     IN p_user_id VARCHAR(8)
@@ -420,9 +416,9 @@ BEGIN
         total_time_spent AS total_time_spent,
         last_read_page AS last_read_page,
         IF(is_favorite > 0, TRUE, FALSE) AS is_favorite;
-END;
+END//
 
-
+DELIMITER ;
 
 -- DROP TRIGGER IF EXISTS GenerateBookId;
 
@@ -442,21 +438,23 @@ END;
 --     END IF;
 -- END;
 
+DELIMITER //
 
-DROP PROCEDURE IF EXISTS deleteBook;
+DROP PROCEDURE IF EXISTS DeleteBook//
 
-CREATE PROCEDURE deleteBook(IN bookID VARCHAR(8))
+CREATE PROCEDURE DeleteBook(IN bookID VARCHAR(8))
 BEGIN
     -- Delete entries from ReadHistory table
-    DELETE FROM readhistory WHERE book_id = bookID;
+    DELETE FROM ReadHistory WHERE book_id = bookID;
 
     -- Delete entries from BookStatistics table
-    DELETE FROM bookstatistics WHERE book_id = bookID;
+    DELETE FROM BookStatistics WHERE book_id = bookID;
 
     -- Delete entries from BookCategories table
     DELETE FROM BookCategories WHERE book_id = bookID;
 
     -- Delete the book from the Books table
     DELETE FROM Books WHERE book_id = bookID;
-END;
+END//
 
+DELIMITER ;
