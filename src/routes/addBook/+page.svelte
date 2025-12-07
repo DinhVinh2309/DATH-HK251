@@ -12,7 +12,7 @@
     let coverImage = null;
     let coverPreview = "";
     let pdfFile = null;
-    let pdfFileName = ""; // To store the name of the uploaded PDF file
+    let pdfFileName = "";
 
     async function fetchInitialData() {
         try {
@@ -42,7 +42,7 @@
         const file = event.target.files[0];
         if (file) {
             pdfFile = file;
-            pdfFileName = file.name; // Set the filename when PDF is uploaded
+            pdfFileName = file.name;
         }
     }
 
@@ -73,7 +73,7 @@
 
             if (response.ok) {
                 alert("Sách đã được thêm thành công.");
-                goto("/manageBookOption"); // Redirect to home
+                goto("/manageBookOption");
             } else {
                 const errorData = await response.json();
                 alert(errorData.error || "Đã xảy ra lỗi khi lưu sách.");
@@ -87,83 +87,207 @@
     onMount(fetchInitialData);
 </script>
 
-<div class="bg-blue-50 min-h-screen p-6">
-    <header class="flex justify-between items-center mb-4">
-        <h1 class="text-2xl font-bold text-blue-600">Thêm Sách Mới</h1>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" on:click={() => goto('/')}>Quay Lại</button>
-    </header>
+<div class="min-h-screen bg-[#D3DDDE] text-[#233038]">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="hidden w-64 flex-col bg-[#233038] text-slate-100 md:flex">
+      <div class="flex items-center gap-2 px-6 py-5 border-b border-slate-700/60">
+        <div class="flex h-9 w-9 items-center justify-center rounded-md bg-[#FF5B04] text-sm font-semibold">
+          BK
+        </div>
+        <div>
+          <p class="text-sm font-semibold">BKBOOKBOX Admin</p>
+          <p class="text-xs text-slate-400">Trang quản lý</p>
+        </div>
+      </div>
 
-    <div class="bg-white p-6 rounded-md shadow-md">
+      <nav class="mt-4 flex-1 space-y-1 px-3 text-sm">
+        <button
+          type="button"
+          class="flex w-full items-center gap-3 rounded-xl bg-[#075056] px-3 py-2 font-medium text-slate-50"
+          on:click={() => goto('/manageBookOption')}
+        >
+          <span>Quản lý sách</span>
+        </button>
+        <button
+          type="button"
+          class="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-slate-200 hover:bg-slate-700/60"
+        >
+          <span>Quản lý người dùng</span>
+        </button>
+        <button
+          type="button"
+          class="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-slate-200 hover:bg-slate-700/60"
+        >
+          <span>Thống kê</span>
+        </button>
+        <button
+          type="button"
+          class="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-slate-200 hover:bg-slate-700/60"
+          on:click={() => goto("/")}
+        >
+          <span>Quay lại trang đọc</span>
+        </button>
+      </nav>
+
+      <div class="mt-auto border-t border-slate-700/60 px-6 py-4 text-xs text-slate-300">
+        <p class="font-medium">Admin</p>
+        <p class="truncate text-slate-400">admin@example.com</p>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 px-4 py-5 sm:px-6 lg:px-8">
+      <!-- Top bar -->
+      <header class="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 class="text-lg font-semibold text-[#233038]">Thêm sách mới</h1>
+          <p class="mt-1 text-sm text-slate-500">
+            Thêm thông tin sách mới vào hệ thống
+          </p>
+        </div>
+        <button
+          class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          on:click={() => goto('/manageBookOption')}
+        >
+          Quay lại
+        </button>
+      </header>
+
+      <!-- Form Card -->
+      <section class="rounded-3xl bg-white p-6 shadow-sm">
         <div class="flex gap-6">
-            <!-- Image Section -->
-            <div class="w-1/3 space-y-4">
-                <div class="w-full h-48 bg-gray-200 flex items-center justify-center rounded relative">
-                    {#if coverPreview}
-                        <img src={coverPreview} alt="Cover Preview" class="w-full h-full object-cover rounded" />
-                    {:else}
-                        <span class="text-gray-500">Thêm hình ảnh</span>
-                    {/if}
-                    <input type="file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" on:change={handleImageUpload} />
-                </div>
-
-                <div class="w-full h-32 bg-gray-100 flex items-center justify-center rounded relative">
-
-                    <input type="file" accept="application/pdf" class="absolute inset-0 opacity-0 cursor-pointer" on:change={handlePdfUpload} />
-                    {#if pdfFileName}
-                        <div class="mt-2 text-gray-700">Tệp đã chọn: {pdfFileName}</div> <!-- Display filename -->
-                    {:else}
-                        <span class="text-gray-500">Thêm tệp PDF</span>
-                    {/if}
-                </div>
+          <!-- Image Section -->
+          <div class="w-1/3 space-y-4">
+            <div>
+              <label class="block text-xs font-medium uppercase tracking-wide text-slate-600 mb-2">
+                Bìa sách
+              </label>
+              <div class="w-full h-64 bg-slate-100 flex items-center justify-center rounded-xl relative overflow-hidden border-2 border-dashed border-slate-300 hover:border-[#075056] transition">
+                {#if coverPreview}
+                  <img src={coverPreview} alt="Cover Preview" class="w-full h-full object-cover" />
+                {:else}
+                  <div class="text-center p-4">
+                    <svg class="mx-auto h-12 w-12 text-slate-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p class="mt-2 text-xs text-slate-500">Nhấp để tải ảnh bìa</p>
+                  </div>
+                {/if}
+                <input type="file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" on:change={handleImageUpload} />
+              </div>
             </div>
 
-            <!-- Input Fields -->
-            <div class="flex-1 space-y-4">
-                <div>
-                    <label class="block text-gray-700 font-semibold">Tên Truyện - Sách:</label>
-                    <input type="text" bind:value={bookTitle} class="border border-gray-300 rounded-md w-full p-2" />
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-semibold">Tác giả:</label>
-                    <input type="text" bind:value={author} class="border border-gray-300 rounded-md w-full p-2" />
-                </div>
-                <!-- <div>
-                    <label class="block text-gray-700 font-semibold">Mã Sách:</label>
-                    <input type="text" bind:value={bookId} class="border border-gray-300 rounded-md w-full p-2" />
-                </div> -->
-                <div>
-                    <label class="block text-gray-700 font-semibold">Nhà Xuất Bản:</label>
-                    <select bind:value={selectedPublisher} class="border border-gray-300 rounded-md w-full p-2">
-                        <option value="" disabled>Chọn nhà xuất bản</option>
-                        {#each publishers as publisher}
-                            <option value={publisher.publisher_id}>{publisher.name}</option>
-                        {/each}
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-semibold">Thể Loại:</label>
-                    <div class="flex flex-wrap gap-8 mt-2">
-                        {#each categories as category}
-                            <label class="flex items-center">
-                                <input type="checkbox" value={category.category_id} on:change={(e) => {
-                                    const value = e.target.value;
-                                    if (e.target.checked) {
-                                        selectedCategories = [...selectedCategories, value];
-                                    } else {
-                                        selectedCategories = selectedCategories.filter((id) => id !== value);
-                                    }
-                                }} />
-                                <span class="ml-2">{category.name}</span>
-                            </label>
-                        {/each}
-                    </div>
-                </div>
+            <div>
+              <label class="block text-xs font-medium uppercase tracking-wide text-slate-600 mb-2">
+                File PDF
+              </label>
+              <div class="w-full h-32 bg-slate-50 flex items-center justify-center rounded-xl relative overflow-hidden border-2 border-dashed border-slate-300 hover:border-[#075056] transition">
+                <input type="file" accept="application/pdf" class="absolute inset-0 opacity-0 cursor-pointer" on:change={handlePdfUpload} />
+                {#if pdfFileName}
+                  <div class="text-center p-4">
+                    <svg class="mx-auto h-10 w-10 text-[#075056]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    <p class="mt-2 text-xs font-medium text-[#233038]">{pdfFileName}</p>
+                  </div>
+                {:else}
+                  <div class="text-center p-4">
+                    <svg class="mx-auto h-10 w-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    <p class="mt-2 text-xs text-slate-500">Nhấp để tải file PDF</p>
+                  </div>
+                {/if}
+              </div>
             </div>
+          </div>
+
+          <!-- Input Fields -->
+          <div class="flex-1 space-y-4">
+            <div>
+              <label class="block text-xs font-medium uppercase tracking-wide text-slate-600 mb-2">
+                Tên sách <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="text"
+                bind:value={bookTitle}
+                class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-[#075056] focus:outline-none focus:ring-2 focus:ring-[#075056]/20"
+                placeholder="Nhập tên sách"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium uppercase tracking-wide text-slate-600 mb-2">
+                Tác giả <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="text"
+                bind:value={author}
+                class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-[#075056] focus:outline-none focus:ring-2 focus:ring-[#075056]/20"
+                placeholder="Nhập tên tác giả"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium uppercase tracking-wide text-slate-600 mb-2">
+                Nhà xuất bản <span class="text-rose-500">*</span>
+              </label>
+              <select
+                bind:value={selectedPublisher}
+                class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm focus:border-[#075056] focus:outline-none focus:ring-2 focus:ring-[#075056]/20"
+              >
+                <option value="" disabled>Chọn nhà xuất bản</option>
+                {#each publishers as publisher}
+                  <option value={publisher.publisher_id}>{publisher.name}</option>
+                {/each}
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium uppercase tracking-wide text-slate-600 mb-2">
+                Thể loại
+              </label>
+              <div class="flex flex-wrap gap-3 mt-2">
+                {#each categories as category}
+                  <label class="flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      value={category.category_id}
+                      class="h-4 w-4 rounded border-slate-300 text-[#075056] focus:ring-[#075056]"
+                      on:change={(e) => {
+                        const value = e.target.value;
+                        if (e.target.checked) {
+                          selectedCategories = [...selectedCategories, value];
+                        } else {
+                          selectedCategories = selectedCategories.filter((id) => id !== value);
+                        }
+                      }}
+                    />
+                    <span class="ml-2 text-sm text-slate-700">{category.name}</span>
+                  </label>
+                {/each}
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Save Button -->
-        <div class="mt-6 flex justify-end">
-            <button class="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" on:click={saveBook}>Xác nhận</button>
+        <div class="mt-6 flex justify-end gap-3 pt-4 border-t border-slate-100">
+          <button
+            class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
+            on:click={() => goto('/manageBookOption')}
+          >
+            Hủy
+          </button>
+          <button
+            class="inline-flex items-center gap-2 rounded-full bg-[#FF5B04] px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#FBAB32]"
+            on:click={saveBook}
+          >
+            <span>Lưu sách</span>
+          </button>
         </div>
-    </div>
+      </section>
+    </main>
+  </div>
 </div>

@@ -204,31 +204,31 @@ INSERT INTO Publishers VALUES ('P0008', 'NXB Tam Ly', 'tamly@example.com');
 
 
 
-INSERT INTO Books VALUES ('B0000001', 'Cuon sach 1', 'Tac Gia A', 300, '/files/book1.pdf','cover-1734099546474-646294659.jpg', NULL, NULL, NULL, 'P0001');
-INSERT INTO Books VALUES ('B0000002', 'Cuon sach 2', 'Tac Gia B', 250, '/files/book2.pdf','cover-1734099546474-646294659.jpg', 'Bo 1', 1, NULL, 'P0002');
-INSERT INTO Books VALUES ('B0000003', 'Cuon sach 3', 'Tac Gia C', 320, '/files/book3.pdf','cover-1734099546474-646294659.jpg', 'Bo 2', 1, NULL, 'P0003');
-INSERT INTO Books VALUES ('B0000004', 'Cuon sach 4', 'Tac Gia D', 200, '/files/book4.pdf','cover-1734099546474-646294659.jpg', 'Bo 2', 2, NULL, 'P0004');
-INSERT INTO Books VALUES ('B0000005', 'Cuon sach 5', 'Tac Gia E', 280, '/files/book5.pdf','cover-1734099546474-646294659.jpg', NULL, NULL, NULL, 'P0001');
-INSERT INTO Books VALUES ('B0000006', 'Cuon sach 6', 'Tac Gia F', 310, '/files/book6.pdf','cover-1734099546474-646294659.jpg', NULL, NULL, 'Ebook', 'P0002');
-INSERT INTO Books VALUES ('B0000007', 'Cuon sach 7', 'Tac Gia G', 250, '/files/book7.pdf','cover-1734099546474-646294659.jpg', NULL, NULL, 'Ebook', 'P0003');
-INSERT INTO Books VALUES ('B0000008', 'Cuon sach 8', 'Tac Gia H', 300, '/files/book8.pdf','cover-1734099546474-646294659.jpg', NULL, NULL, NULL, 'P0001');
-INSERT INTO Books VALUES ('B0000009', 'Cuon sach 9', 'Tac Gia I', 280, '/files/book9.pdf','cover-1734099546474-646294659.jpg', 'Bo 3', 1, NULL, 'P0002');
-INSERT INTO Books VALUES ('B0000010', 'Cuon sach 10', 'Tac Gia J', 350, '/files/book10.pdf','cover-1734099546474-646294659.jpg', NULL, NULL, 'Ebook', 'P0003');
-INSERT INTO Books VALUES ('B0000011', 'Cuon sach 11', 'Tac Gia K', 400, '/files/book11.pdf','cover-1734099546474-646294659.jpg', NULL, NULL, NULL, 'P0004');
-INSERT INTO Books VALUES ('B0000012', 'Cuon sach 12', 'Tac Gia L', 220, '/files/book12.pdf','cover-1734099546474-646294659.jpg', NULL, NULL, 'Ebook', 'P0001');
+INSERT INTO Books VALUES ('B0000001', 'Dế Mèn Phiêu Lưu Ký', 'Tô Hoài', 312, 'B0000001.pdf','B0000001.jpg', NULL, NULL, 'Sách in', 'P0001');
+INSERT INTO Books VALUES ('B0000002', 'Nhật Ký Đặng Thùy Trâm', 'Đặng Thùy Trâm', 288, 'B0000002.pdf','B0000002.jpg', NULL, NULL, 'Sách in', 'P0002');
+INSERT INTO Books VALUES ('B0000003', 'Số Đỏ', 'Vũ Trọng Phụng', 320, 'B0000003.pdf','B0000003.jfif', NULL, NULL, 'Sách in', 'P0003');
+INSERT INTO Books VALUES ('B0000004', 'Chí Phèo', 'Nam Cao', 248, 'B0000004.pdf','B0000004.jpg', 'Tuyển tập Nam Cao', 1, 'Sách in', 'P0001');
+INSERT INTO Books VALUES ('B0000005', 'Vợ Nhặt', 'Kim Lân', 192, 'B0000005.pdf','B0000005.jfif', 'Tuyển tập Kim Lân', 1, 'Sách in', 'P0002');
+INSERT INTO Books VALUES ('B0000006', 'Tắt Đèn', 'Ngô Tất Tố', 296, 'B0000006.pdf','B0000006.jpeg', NULL, NULL, 'Ebook', 'P0003');
+INSERT INTO Books VALUES ('B0000007', 'Truyện Kiều', 'Nguyễn Du', 408, 'B0000007.pdf','B0000007.jfif', NULL, NULL, 'Ebook', 'P0001');
+INSERT INTO Books VALUES ('B0000008', 'Đất Rừng Phương Nam', 'Đoàn Giỏi', 280, 'B0000008.pdf','B0000008.jpg', NULL, NULL, 'Sách in', 'P0002');
+INSERT INTO Books VALUES ('B0000009', 'Những Ngôi Sao Xa Xôi', 'Lê Minh Khuê', 256, 'B0000009.pdf','B0000009.jpg', 'Tuyển tập truyện ngắn', 1, 'Sách in', 'P0004');
+INSERT INTO Books VALUES ('B0000010', 'Bến Không Chồng', 'Dương Hướng', 352, 'B0000010.pdf','B0000010.jpg', NULL, NULL, 'Ebook', 'P0001');
+INSERT INTO Books VALUES ('B0000011', 'Những Đứa Con Trong Gia Đình', 'Nguyễn Thi', 224, 'B0000011.pdf','B0000011.jpg', NULL, NULL, 'Sách in', 'P0003');
+INSERT INTO Books VALUES ('B0000012', 'Tuổi Thơ Dữ Dội', 'Phùng Quán', 432, 'B0000012.pdf','B0000012.png', NULL, NULL, 'Ebook', 'P0002');
 
 
 
-INSERT INTO Categories VALUES ('C0001', 'Khoa hoc');
-INSERT INTO Categories VALUES ('C0002', 'Kinh di');
-INSERT INTO Categories VALUES ('C0003', 'Van hoc');
-INSERT INTO Categories VALUES ('C0004', 'Lich su');
-INSERT INTO Categories VALUES ('C0005', 'Thieu nhi');
-INSERT INTO Categories VALUES ('C0006', 'Cong nghe');
-INSERT INTO Categories VALUES ('C0007', 'Tam ly');
-INSERT INTO Categories VALUES ('C0008', 'Giao duc');
-INSERT INTO Categories VALUES ('C0009', 'Trinh tham');
-INSERT INTO Categories VALUES ('C0010', 'Y hoc');
+INSERT INTO Categories VALUES ('C0001', 'Khoa học');
+INSERT INTO Categories VALUES ('C0002', 'Kinh dị');
+INSERT INTO Categories VALUES ('C0003', 'Văn học');
+INSERT INTO Categories VALUES ('C0004', 'Lịch sử');
+INSERT INTO Categories VALUES ('C0005', 'Thiếu nhi');
+INSERT INTO Categories VALUES ('C0006', 'Công nghệ');
+INSERT INTO Categories VALUES ('C0007', 'Tâm lý');
+INSERT INTO Categories VALUES ('C0008', 'Giáo dục');
+INSERT INTO Categories VALUES ('C0009', 'Trinh thám');
+INSERT INTO Categories VALUES ('C0010', 'Y học');
 
 
 INSERT INTO Notifications VALUES (100000000000000001, 'Chao mung nguoi dung moi', '2024-1-1', 'Y', 1001);
@@ -243,26 +243,130 @@ INSERT INTO Notifications VALUES (100000000000000009, 'Su kien thang doc sach', 
 
 
 
-INSERT INTO BookStatistics VALUES ('S0001', 'B0000001', 100, 50);
-INSERT INTO BookStatistics VALUES ('S0002', 'B0000002', 80, 30);
-INSERT INTO BookStatistics VALUES ('S0006', 'B0000008', 120, 60);
-INSERT INTO BookStatistics VALUES ('S0007', 'B0000009', 150, 80);
-INSERT INTO BookStatistics VALUES ('S0008', 'B0000010', 200, 100);
-INSERT INTO BookStatistics VALUES ('S0009', 'B0000011', 180, 90);
-INSERT INTO BookStatistics VALUES ('S0010', 'B0000012', 250, 120);
+INSERT INTO BookStatistics VALUES ('S0001', 'B0000001', 1250, 320);
+INSERT INTO BookStatistics VALUES ('S0002', 'B0000002', 980, 245);
+INSERT INTO BookStatistics VALUES ('S0003', 'B0000003', 1100, 280);
+INSERT INTO BookStatistics VALUES ('S0004', 'B0000004', 1320, 360);
+INSERT INTO BookStatistics VALUES ('S0005', 'B0000005', 1050, 270);
+INSERT INTO BookStatistics VALUES ('S0006', 'B0000006', 1150, 290);
+INSERT INTO BookStatistics VALUES ('S0007', 'B0000007', 1450, 420);
+INSERT INTO BookStatistics VALUES ('S0008', 'B0000008', 1280, 340);
+INSERT INTO BookStatistics VALUES ('S0009', 'B0000009', 890, 210);
+INSERT INTO BookStatistics VALUES ('S0010', 'B0000010', 1020, 260);
+INSERT INTO BookStatistics VALUES ('S0011', 'B0000011', 960, 235);
+INSERT INTO BookStatistics VALUES ('S0012', 'B0000012', 1380, 380);
 
 
-INSERT INTO ReadHistory VALUES ('U0000001', 'B0000001', '2024-01-01', 120, 50);
-INSERT INTO ReadHistory VALUES ('U0000002', 'B0000002', '2024-01-01', 90, 25);
-INSERT INTO ReadHistory VALUES ('U0000005', 'B0000003', '2024-01-01', 200, 100);
-INSERT INTO ReadHistory VALUES ('U0000006', 'B0000004', '2024-01-01', 150, 80);
-INSERT INTO ReadHistory VALUES ('U0000007', 'B0000005', '2024-01-01', 180, 90);
-INSERT INTO ReadHistory VALUES ('U0000008', 'B0000006', '2024-01-01', 220, 110);
-INSERT INTO ReadHistory VALUES ('U0000009', 'B0000008', '2024-01-01', 150, 75);
-INSERT INTO ReadHistory VALUES ('U0000010', 'B0000009', '2024-01-01', 200, 120);
-INSERT INTO ReadHistory VALUES ('U0000011', 'B0000010', '2024-01-01', 180, 90);
-INSERT INTO ReadHistory VALUES ('U0000012', 'B0000011', '2024-01-01', 240, 160);
-INSERT INTO ReadHistory VALUES ('U0000005', 'B0000012', '2024-01-01', 300, 150);
+-- BookCategories: Gán thể loại cho các sách
+INSERT INTO BookCategories VALUES ('B0000001', 'C0005'); -- Dế Mèn Phiêu Lưu Ký - Thiếu nhi
+INSERT INTO BookCategories VALUES ('B0000002', 'C0004'); -- Nhật Ký Đặng Thùy Trâm - Lịch sử
+INSERT INTO BookCategories VALUES ('B0000003', 'C0003'); -- Số Đỏ - Văn học
+INSERT INTO BookCategories VALUES ('B0000003', 'C0009'); -- Số Đỏ - Trinh thám
+INSERT INTO BookCategories VALUES ('B0000004', 'C0003'); -- Chí Phèo - Văn học
+INSERT INTO BookCategories VALUES ('B0000005', 'C0003'); -- Vợ Nhặt - Văn học
+INSERT INTO BookCategories VALUES ('B0000006', 'C0003'); -- Tắt Đèn - Văn học
+INSERT INTO BookCategories VALUES ('B0000007', 'C0003'); -- Truyện Kiều - Văn học
+INSERT INTO BookCategories VALUES ('B0000008', 'C0003'); -- Đất Rừng Phương Nam - Văn học
+INSERT INTO BookCategories VALUES ('B0000008', 'C0004'); -- Đất Rừng Phương Nam - Lịch sử
+INSERT INTO BookCategories VALUES ('B0000009', 'C0003'); -- Những Ngôi Sao Xa Xôi - Văn học
+INSERT INTO BookCategories VALUES ('B0000009', 'C0004'); -- Những Ngôi Sao Xa Xôi - Lịch sử
+INSERT INTO BookCategories VALUES ('B0000010', 'C0003'); -- Bến Không Chồng - Văn học
+INSERT INTO BookCategories VALUES ('B0000011', 'C0003'); -- Những Đứa Con Trong Gia Đình - Văn học
+INSERT INTO BookCategories VALUES ('B0000011', 'C0004'); -- Những Đứa Con Trong Gia Đình - Lịch sử
+INSERT INTO BookCategories VALUES ('B0000012', 'C0003'); -- Tuổi Thơ Dữ Dội - Văn học
+INSERT INTO BookCategories VALUES ('B0000012', 'C0004'); -- Tuổi Thơ Dữ Dội - Lịch sử
+
+
+-- FavoriteLists: Tạo danh sách yêu thích cho users
+INSERT INTO FavoriteLists VALUES ('F0000001', 'U0000001');
+INSERT INTO FavoriteLists VALUES ('F0000002', 'U0000002');
+INSERT INTO FavoriteLists VALUES ('F0000003', 'U0000003');
+INSERT INTO FavoriteLists VALUES ('F0000004', 'U0000005');
+INSERT INTO FavoriteLists VALUES ('F0000005', 'U0000007');
+INSERT INTO FavoriteLists VALUES ('F0000006', 'U0000008');
+INSERT INTO FavoriteLists VALUES ('F0000007', 'U0000010');
+INSERT INTO FavoriteLists VALUES ('F0000008', 'U0000012');
+
+
+-- FavoriteListBooks: Thêm sách vào danh sách yêu thích
+INSERT INTO FavoriteListBooks VALUES ('F0000001', 'B0000001'); -- User 1 yêu thích Dế Mèn
+INSERT INTO FavoriteListBooks VALUES ('F0000001', 'B0000007'); -- User 1 yêu thích Truyện Kiều
+INSERT INTO FavoriteListBooks VALUES ('F0000002', 'B0000002'); -- User 2 yêu thích Nhật Ký Đặng Thùy Trâm
+INSERT INTO FavoriteListBooks VALUES ('F0000002', 'B0000004'); -- User 2 yêu thích Chí Phèo
+INSERT INTO FavoriteListBooks VALUES ('F0000003', 'B0000003'); -- User 3 yêu thích Số Đỏ
+INSERT INTO FavoriteListBooks VALUES ('F0000003', 'B0000008'); -- User 3 yêu thích Đất Rừng Phương Nam
+INSERT INTO FavoriteListBooks VALUES ('F0000004', 'B0000005'); -- User 5 yêu thích Vợ Nhặt
+INSERT INTO FavoriteListBooks VALUES ('F0000004', 'B0000011'); -- User 5 yêu thích Những Đứa Con Trong Gia Đình
+INSERT INTO FavoriteListBooks VALUES ('F0000004', 'B0000012'); -- User 5 yêu thích Tuổi Thơ Dữ Dội
+INSERT INTO FavoriteListBooks VALUES ('F0000005', 'B0000007'); -- User 7 yêu thích Truyện Kiều
+INSERT INTO FavoriteListBooks VALUES ('F0000005', 'B0000009'); -- User 7 yêu thích Những Ngôi Sao Xa Xôi
+INSERT INTO FavoriteListBooks VALUES ('F0000006', 'B0000008'); -- User 8 yêu thích Đất Rừng Phương Nam
+INSERT INTO FavoriteListBooks VALUES ('F0000006', 'B0000010'); -- User 8 yêu thích Bến Không Chồng
+INSERT INTO FavoriteListBooks VALUES ('F0000007', 'B0000003'); -- User 10 yêu thích Số Đỏ
+INSERT INTO FavoriteListBooks VALUES ('F0000007', 'B0000006'); -- User 10 yêu thích Tắt Đèn
+INSERT INTO FavoriteListBooks VALUES ('F0000008', 'B0000001'); -- User 12 yêu thích Dế Mèn
+INSERT INTO FavoriteListBooks VALUES ('F0000008', 'B0000007'); -- User 12 yêu thích Truyện Kiều
+INSERT INTO FavoriteListBooks VALUES ('F0000008', 'B0000011'); -- User 12 yêu thích Những Đứa Con Trong Gia Đình
+
+
+-- AdminManages: Admin quản lý các sách
+INSERT INTO AdminManages VALUES (1001, 'B0000001');
+INSERT INTO AdminManages VALUES (1001, 'B0000002');
+INSERT INTO AdminManages VALUES (1001, 'B0000003');
+INSERT INTO AdminManages VALUES (1001, 'B0000004');
+INSERT INTO AdminManages VALUES (1001, 'B0000005');
+INSERT INTO AdminManages VALUES (1002, 'B0000006');
+INSERT INTO AdminManages VALUES (1002, 'B0000007');
+INSERT INTO AdminManages VALUES (1002, 'B0000008');
+INSERT INTO AdminManages VALUES (1003, 'B0000009');
+INSERT INTO AdminManages VALUES (1003, 'B0000010');
+INSERT INTO AdminManages VALUES (1003, 'B0000011');
+INSERT INTO AdminManages VALUES (1004, 'B0000012');
+INSERT INTO AdminManages VALUES (1004, 'B0000001');
+INSERT INTO AdminManages VALUES (1004, 'B0000007');
+INSERT INTO AdminManages VALUES (1005, 'B0000003');
+INSERT INTO AdminManages VALUES (1005, 'B0000008');
+INSERT INTO AdminManages VALUES (1005, 'B0000012');
+
+
+-- AdminCategories: Admin quản lý các thể loại
+INSERT INTO AdminCategories VALUES (1001, 'C0001'); -- Admin 1 quản lý Khoa học
+INSERT INTO AdminCategories VALUES (1001, 'C0003'); -- Admin 1 quản lý Văn học
+INSERT INTO AdminCategories VALUES (1002, 'C0002'); -- Admin 2 quản lý Kinh dị
+INSERT INTO AdminCategories VALUES (1002, 'C0009'); -- Admin 2 quản lý Trinh thám
+INSERT INTO AdminCategories VALUES (1003, 'C0004'); -- Admin 3 quản lý Lịch sử
+INSERT INTO AdminCategories VALUES (1003, 'C0005'); -- Admin 3 quản lý Thiếu nhi
+INSERT INTO AdminCategories VALUES (1004, 'C0006'); -- Admin 4 quản lý Công nghệ
+INSERT INTO AdminCategories VALUES (1004, 'C0008'); -- Admin 4 quản lý Giáo dục
+INSERT INTO AdminCategories VALUES (1005, 'C0007'); -- Admin 5 quản lý Tâm lý
+INSERT INTO AdminCategories VALUES (1005, 'C0010'); -- Admin 5 quản lý Y học
+
+
+INSERT INTO ReadHistory VALUES ('U0000001', 'B0000001', '2024-01-15', 180, 85);
+INSERT INTO ReadHistory VALUES ('U0000001', 'B0000007', '2024-02-20', 240, 120);
+INSERT INTO ReadHistory VALUES ('U0000002', 'B0000002', '2024-02-25', 150, 45);
+INSERT INTO ReadHistory VALUES ('U0000002', 'B0000004', '2024-03-10', 120, 60);
+INSERT INTO ReadHistory VALUES ('U0000003', 'B0000003', '2024-03-12', 200, 95);
+INSERT INTO ReadHistory VALUES ('U0000003', 'B0000008', '2024-04-01', 160, 80);
+INSERT INTO ReadHistory VALUES ('U0000004', 'B0000001', '2024-05-23', 90, 35);
+INSERT INTO ReadHistory VALUES ('U0000005', 'B0000005', '2024-04-05', 140, 70);
+INSERT INTO ReadHistory VALUES ('U0000005', 'B0000011', '2024-04-15', 180, 90);
+INSERT INTO ReadHistory VALUES ('U0000005', 'B0000012', '2024-05-01', 260, 130);
+INSERT INTO ReadHistory VALUES ('U0000006', 'B0000004', '2024-03-20', 160, 75);
+INSERT INTO ReadHistory VALUES ('U0000006', 'B0000006', '2024-04-10', 200, 100);
+INSERT INTO ReadHistory VALUES ('U0000007', 'B0000007', '2024-04-25', 280, 140);
+INSERT INTO ReadHistory VALUES ('U0000007', 'B0000009', '2024-05-05', 120, 60);
+INSERT INTO ReadHistory VALUES ('U0000008', 'B0000008', '2024-05-12', 170, 85);
+INSERT INTO ReadHistory VALUES ('U0000008', 'B0000010', '2024-05-18', 190, 95);
+INSERT INTO ReadHistory VALUES ('U0000009', 'B0000002', '2024-02-28', 130, 50);
+INSERT INTO ReadHistory VALUES ('U0000009', 'B0000005', '2024-03-15', 110, 55);
+INSERT INTO ReadHistory VALUES ('U0000010', 'B0000003', '2024-04-20', 180, 85);
+INSERT INTO ReadHistory VALUES ('U0000010', 'B0000006', '2024-05-10', 210, 105);
+INSERT INTO ReadHistory VALUES ('U0000011', 'B0000010', '2024-03-18', 150, 70);
+INSERT INTO ReadHistory VALUES ('U0000011', 'B0000012', '2024-04-08', 220, 110);
+INSERT INTO ReadHistory VALUES ('U0000012', 'B0000001', '2024-05-08', 200, 95);
+INSERT INTO ReadHistory VALUES ('U0000012', 'B0000007', '2024-05-15', 300, 150);
+INSERT INTO ReadHistory VALUES ('U0000012', 'B0000011', '2024-05-20', 180, 85);
 
 DELIMITER //
 

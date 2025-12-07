@@ -6,13 +6,19 @@
   let filteredBooks = [];
   let currentPage = 1;
   let totalPages = 1;
-  let deleteMode = false;
   let searchQuery = "";
   let sortOption = "title"; // Default sorting by book title
+  let isLoading = false;
 
-  async function fetchBooks() {
+  async function fetchBooks(query = "") {
     try {
-      const response = await fetch('http://localhost:3000/getAllbooks');
+      isLoading = true;
+      const trimmed = query.trim();
+      const endpoint = trimmed
+        ? `http://localhost:3000/searchBooks?q=${encodeURIComponent(trimmed)}`
+        : 'http://localhost:3000/getAllBooks';
+
+      const response = await fetch(endpoint);
       const data = await response.json();
 
       if (data.success) {
@@ -23,6 +29,8 @@
       }
     } catch (error) {
       console.error('Error fetching books:', error);
+    } finally {
+      isLoading = false;
     }
   }
 
@@ -31,17 +39,21 @@
   }
 
   function applyFiltersAndSorting() {
-    // Apply search
+    let working = [...books];
+
+    // Apply client-side search as a safeguard (in case backend search is not used)
     const query = searchQuery.trim().toLowerCase();
-    filteredBooks = books.filter(
-      book =>
-        book.title.toLowerCase().includes(query) ||
-        String(book.book_id).toLowerCase().includes(query) ||
-        book.author.toLowerCase().includes(query)
-    );
+    if (query) {
+      working = working.filter(
+        (book) =>
+          book.title.toLowerCase().includes(query) ||
+          String(book.book_id).toLowerCase().includes(query) ||
+          book.author.toLowerCase().includes(query)
+      );
+    }
 
     // Apply sorting
-    filteredBooks.sort((a, b) => {
+    working.sort((a, b) => {
       if (sortOption === "title") {
         return a.title.localeCompare(b.title);
       } else if (sortOption === "author") {
@@ -51,8 +63,14 @@
       }
     });
 
+    filteredBooks = working;
     currentPage = 1; // Reset to the first page
     updateTotalPages();
+  }
+
+  async function handleSearchInput(event) {
+    searchQuery = event.target.value;
+    await fetchBooks(searchQuery);
   }
 
   function goToPage(page) {
@@ -65,11 +83,16 @@
     goto(`/editBook?bookId=${bookId}`);
   }
 
-  function toggleDeleteMode() {
-    deleteMode = !deleteMode;
-  }
-
   async function deleteBook(bookId) {
+    // Find book title for confirmation message
+    const book = books.find(b => b.book_id === bookId);
+    const bookTitle = book ? book.title : bookId;
+    
+    // Show confirmation dialog
+    if (!confirm(`Bạn có chắc chắn muốn xóa sách "${bookTitle}"?\n\nHành động này không thể hoàn tác.`)) {
+      return;
+    }
+
     try {
       const response = await fetch(`http://localhost:3000/deleteBook?bookId=${bookId}`, {
         method: 'DELETE',
@@ -80,10 +103,15 @@
         // Remove the book locally only if the deletion is successful on the server
         books = books.filter(book => book.book_id !== bookId);
         applyFiltersAndSorting(); // Reapply sorting and filtering after deleting a book
+        alert(`Đã xóa sách "${bookTitle}" thành công.`);
       } else {
-        console.error('Failed to delete book:', data.message);
+        const errorMsg = data.error || data.message || 'Không thể xóa sách';
+        alert(`Lỗi: ${errorMsg}`);
+        console.error('Failed to delete book:', errorMsg);
       }
     } catch (error) {
+      const errorMessage = (error instanceof Error) ? error.message : 'Lỗi không xác định';
+      alert(`Đã xảy ra lỗi khi xóa sách: ${errorMessage}`);
       console.error('Error deleting book:', error);
     }
   }
@@ -91,78 +119,177 @@
   onMount(fetchBooks);
 </script>
 
-<div class="bg-blue-50 min-h-screen">
-  <!-- Top Bar -->
-  <header class="sticky top-0 z-10 bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
-    <h1 class="text-xl font-bold">BKBOOKS</h1>
-    <button class="bg-white text-blue-700 rounded py-2 px-4" on:click={() => goto("/" )}>Quay lại</button>
-  </header>
-
-  <div class="flex">
+<div class="min-h-screen bg-[#D3DDDE] text-[#233038]">
+  <div class="flex min-h-screen">
     <!-- Sidebar -->
-    <nav class="sticky top-16 z-10 w-1/5 bg-blue-700 text-white h-[calc(100vh-4rem)] overflow-y-auto p-4">
-      <ul class="space-y-4">
-        <li><a href="#" class="block hover:bg-blue-600 p-2 rounded bg-blue-800">Quản Lý Sách</a></li>
-        <li><a href="#" class="block hover:bg-blue-600 p-2 rounded">Quản Lý Tài Khoản</a></li>
-        <li><a href="#" class="block hover:bg-blue-600 p-2 rounded">Thống kê lượt xem</a></li>
-      </ul>
-    </nav>
+    <aside class="hidden w-64 flex-col bg-[#233038] text-slate-100 md:flex">
+      <div class="flex items-center gap-2 px-6 py-5 border-b border-slate-700/60">
+        <div class="flex h-9 w-9 items-center justify-center rounded-md bg-[#FF5B04] text-sm font-semibold">
+          BK
+        </div>
+        <div>
+          <p class="text-sm font-semibold">BKBOOKBOX Admin</p>
+          <p class="text-xs text-slate-400">Trang quản lý</p>
+        </div>
+      </div>
+
+      <nav class="mt-4 flex-1 space-y-1 px-3 text-sm">
+        <button
+          type="button"
+          class="flex w-full items-center gap-3 rounded-xl bg-[#075056] px-3 py-2 font-medium text-slate-50"
+        >
+          <span>Quản lý sách</span>
+        </button>
+        <button
+          type="button"
+          class="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-slate-200 hover:bg-slate-700/60"
+          on:click={() => goto("/")}
+        >
+          <span>Quay lại trang đọc</span>
+        </button>
+      </nav>
+    </aside>
 
     <!-- Main Content -->
-    <main class="w-4/5 bg-white rounded-md p-6 ml-4 mt-4">
-      <h2 class="text-2xl font-bold text-gray-700">Tủ Sách Hiện Tại</h2>
-
-      <!-- Search, Sort, and Buttons -->
-      <div class="mt-4 flex flex-col md:flex-row items-center gap-4">
-        <input
-          type="text"
-          placeholder="Tìm kiếm theo tên, id hoặc tác giả"
-          class="border border-gray-300 rounded-md p-2 flex-1"
-          bind:value={searchQuery}
-          on:input={applyFiltersAndSorting}
-        />
-        <select
-          bind:value={sortOption}
-          on:change={applyFiltersAndSorting}
-          class="border border-gray-300 rounded-md p-2">
-          <option value="title">Sắp xếp theo Tên Sách</option>
-          <option value="author">Sắp xếp theo Tác Giả</option>
-          <option value="book_id">Sắp xếp theo ID Sách</option>
-        </select>
-        <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" on:click={() => goto("/addBook")}>Thêm Sách</button>
-        <button class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600" on:click={toggleDeleteMode}>
-          {deleteMode ? 'Xong' : 'Xóa sách'}
-        </button>
-      </div>
-
-      <!-- Book List -->
-      <div class="grid grid-cols-4 gap-6 mt-6">
-        {#each filteredBooks.slice((currentPage - 1) * 10, currentPage * 10) as book}
-          <div 
-            class="border rounded-md shadow-md p-4 text-center hover:shadow-lg transition cursor-pointer" 
-            class:bg-red-100={deleteMode}
-            on:click={() => deleteMode ? deleteBook(book.book_id) : editBook(book.book_id)}>
-            <img src={"covers/" + book.cover_path} alt={book.title} class="w-full h-40 object-cover rounded-md" />
-            <h3 class="mt-2 text-gray-700 font-semibold">{book.title}</h3>
-            <p class="text-gray-500">ID: {book.book_id}</p>
-            <p class="text-gray-500">Tác giả: {book.author}</p>
+    <main class="flex-1 px-4 py-5 sm:px-6 lg:px-8">
+      <!-- Top bar -->
+      <header class="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <h1 class="text-lg font-semibold text-[#233038]">Trang quản lý</h1>
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-xs text-slate-400">
+              🔍
+            </span>
+            <input
+              type="search"
+              placeholder="Tìm kiếm sách, tác giả..."
+              class="w-60 rounded-full border border-[#D3DDDE] bg-white px-9 py-2 text-sm text-[#233038] placeholder:text-slate-400 focus:border-[#075056] focus:outline-none focus:ring-2 focus:ring-[#075056]/20"
+              bind:value={searchQuery}
+              on:input={handleSearchInput}
+            />
           </div>
-        {/each}
-      </div>
+        </div>
+      </header>
 
-      <!-- Pagination -->
-      <div class="mt-6 flex justify-center items-center gap-2">
-        {#each Array(totalPages) as _, i}
+      <!-- Card: quản lý sách -->
+      <section class="rounded-3xl bg-white p-6 shadow-sm">
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-semibold text-[#233038]">Quản lý sách</h2>
+            <p class="mt-1 text-sm text-slate-500">
+              Thêm, sửa và xóa sách khỏi hệ thống.
+            </p>
+          </div>
           <button
-            class="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-100"
-            class:bg-blue-600={currentPage === i + 1}
-            class:text-white={currentPage === i + 1}
-            on:click={() => goToPage(i + 1)}
+            class="inline-flex items-center gap-2 rounded-full bg-[#FF5B04] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#FBAB32]"
+            on:click={() => goto("/addBook")}
           >
-            {i + 1}
+            <span>＋</span>
+            <span>Thêm sách mới</span>
           </button>
-        {/each}
-      </div>
+        </div>
+
+        <!-- Sort -->
+        <div class="mb-4 flex flex-wrap items-center gap-3">
+          <div class="ml-auto flex items-center gap-2 text-xs">
+            <span class="text-slate-500">Sắp xếp theo:</span>
+            <select
+              bind:value={sortOption}
+              on:change={applyFiltersAndSorting}
+              class="rounded-full border border-[#D3DDDE] bg-white px-3 py-1 text-xs text-[#233038] focus:border-[#075056] focus:outline-none focus:ring-1 focus:ring-[#075056]/30"
+            >
+              <option value="title">Tên sách</option>
+              <option value="author">Tác giả</option>
+              <option value="book_id">ID sách</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Table header -->
+        <div class="hidden items-center gap-4 border-b border-slate-100 pb-2 text-xs font-medium text-slate-500 md:grid md:grid-cols-[0.6fr_2fr_1.2fr_1.2fr_0.8fr_0.6fr]">
+          <span>COVER</span>
+          <span>TITLE</span>
+          <span>AUTHOR</span>
+          <span>CATEGORY</span>
+          <span>STATUS</span>
+          <span class="text-right">ACTIONS</span>
+        </div>
+
+        <!-- Book list -->
+        {#if isLoading}
+          <div class="py-10 text-center text-sm text-slate-500">
+            Đang tải dữ liệu sách...
+          </div>
+        {:else}
+          <div class="divide-y divide-slate-100">
+            {#each filteredBooks.slice((currentPage - 1) * 10, currentPage * 10) as book}
+              <div
+                class="grid items-center gap-4 py-3 text-sm md:grid-cols-[0.6fr_2fr_1.2fr_1.2fr_0.8fr_0.6fr]"
+              >
+                <!-- Cover -->
+                <div class="flex items-center">
+                  <img
+                    src={"covers/" + book.cover_path}
+                    alt={book.title}
+                    class="h-14 w-10 rounded-md object-cover ring-1 ring-slate-200"
+                  />
+                </div>
+
+                <!-- Title -->
+                <div class="space-y-1">
+                  <p class="font-medium text-[#233038]">{book.title}</p>
+                  <p class="text-xs text-slate-500">ID: {book.book_id}</p>
+                </div>
+
+                <!-- Author -->
+                <p class="text-sm text-slate-600">{book.author}</p>
+
+                <!-- Category -->
+                <p class="text-sm text-slate-600">
+                  {book.categories || '—'}
+                </p>
+
+                <!-- Status badge -->
+                <div>
+                  <span class="inline-flex items-center rounded-full bg-[#FBAB32]/15 px-3 py-1 text-xs font-semibold text-[#FBAB32]">
+                    Published
+                  </span>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center justify-end gap-3 text-xs">
+                  <button
+                    class="rounded-full border border-[#D3DDDE] px-2 py-1 text-[#075056] hover:bg-[#D3DDDE]/40"
+                    on:click={() => editBook(book.book_id)}
+                  >
+                    ✏️
+                  </button>
+                  <button
+                    class="rounded-full border border-rose-200 px-2 py-1 text-rose-600 hover:bg-rose-50"
+                    on:click={() => deleteBook(book.book_id)}
+                  >
+                    🗑
+                  </button>
+                </div>
+              </div>
+            {/each}
+          </div>
+        {/if}
+
+        <!-- Pagination -->
+        <div class="mt-4 flex justify-end gap-2 text-xs">
+          {#each Array(totalPages) as _, i}
+            <button
+              class="h-7 w-7 rounded-full border border-[#D3DDDE] text-center text-[#233038] hover:bg-[#D3DDDE]/60"
+              class:bg-[#075056]={currentPage === i + 1}
+              class:text-white={currentPage === i + 1}
+              on:click={() => goToPage(i + 1)}
+            >
+              {i + 1}
+            </button>
+          {/each}
+        </div>
+      </section>
     </main>
   </div>
 </div>

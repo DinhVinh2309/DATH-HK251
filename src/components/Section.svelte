@@ -7,9 +7,11 @@
     import Card from "./Card.svelte"
   </script>
   
-  <section class="px-8 mb-8 max-w-full">
-    <h2 class="text-lg font-bold text-blue-700 mb-4">{title}</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+  <section class="max-w-6xl mx-auto w-full">
+    <div class="mb-4 flex items-baseline justify-between">
+      <h2 class="text-xl font-semibold tracking-tight text-slate-900">{title}</h2>
+    </div>
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
       {#each items as item}
         <Card {item} />
       {/each}
