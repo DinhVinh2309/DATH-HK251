@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  import { BookOpen } from 'lucide-svelte';
 
   let books = [];
   let filteredBooks = [];
@@ -124,9 +125,10 @@
     <!-- Sidebar -->
     <aside class="hidden w-64 flex-col bg-[#233038] text-slate-100 md:flex">
       <div class="flex items-center gap-2 px-6 py-5 border-b border-slate-700/60">
-        <div class="flex h-9 w-9 items-center justify-center rounded-md bg-[#FF5B04] text-sm font-semibold">
-          BK
-        </div>
+        <BookOpen
+          class="flex h-9 w-9 items-center justify-center rounded-md text-sm font-semibold text-[#FF5B04]"
+          size={16}
+        />
         <div>
           <p class="text-sm font-semibold">BKBOOKBOX Admin</p>
           <p class="text-xs text-slate-400">Trang quản lý</p>

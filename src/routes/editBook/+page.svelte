@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
     import { page } from '$app/stores';
+    import { BookOpen } from 'lucide-svelte';
 
     let bookTitle = "";
     let author = "";
@@ -133,9 +134,10 @@
     <!-- Sidebar -->
     <aside class="hidden w-64 flex-col bg-[#233038] text-slate-100 md:flex">
       <div class="flex items-center gap-2 px-6 py-5 border-b border-slate-700/60">
-        <div class="flex h-9 w-9 items-center justify-center rounded-md bg-[#FF5B04] text-sm font-semibold">
-          BK
-        </div>
+        <BookOpen
+          class="flex h-9 w-9 items-center justify-center rounded-md text-sm font-semibold text-[#FF5B04]"
+          size={16}
+        />
         <div>
           <p class="text-sm font-semibold">BKBOOKBOX Admin</p>
           <p class="text-xs text-slate-400">Trang quản lý</p>
@@ -153,28 +155,11 @@
         <button
           type="button"
           class="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-slate-200 hover:bg-slate-700/60"
-        >
-          <span>Quản lý người dùng</span>
-        </button>
-        <button
-          type="button"
-          class="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-slate-200 hover:bg-slate-700/60"
-        >
-          <span>Thống kê</span>
-        </button>
-        <button
-          type="button"
-          class="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-slate-200 hover:bg-slate-700/60"
           on:click={() => goto("/")}
         >
           <span>Quay lại trang đọc</span>
         </button>
       </nav>
-
-      <div class="mt-auto border-t border-slate-700/60 px-6 py-4 text-xs text-slate-300">
-        <p class="font-medium">Admin</p>
-        <p class="truncate text-slate-400">admin@example.com</p>
-      </div>
     </aside>
 
     <!-- Main Content -->

@@ -149,12 +149,6 @@ app.delete("/deleteBook", async (req, res) => {
     connection = await pool.getConnection();
     await connection.beginTransaction();
 
-    // Get book file paths before deletion for cleanup
-    const [bookRows] = await connection.query(
-      'SELECT cover_path, file_path FROM Books WHERE book_id = ?',
-      [bookId]
-    );
-
     // Delete from all related tables
     // Delete from FavoriteListBooks first
     await connection.query('DELETE FROM FavoriteListBooks WHERE book_id = ?', [bookId]);
@@ -176,37 +170,6 @@ app.delete("/deleteBook", async (req, res) => {
 
     await connection.commit();
     connection.release();
-
-    // Delete files after successful database deletion
-    if (bookRows.length > 0) {
-      const book = bookRows[0];
-      
-      // Delete cover image
-      if (book.cover_path) {
-        const coverPath = path.join(coversDir, book.cover_path);
-        if (fs.existsSync(coverPath)) {
-          try {
-            fs.unlinkSync(coverPath);
-            console.log('Deleted cover file:', coverPath);
-          } catch (fileError) {
-            console.error('Error deleting cover file:', fileError);
-          }
-        }
-      }
-      
-      // Delete PDF file
-      if (book.file_path) {
-        const pdfPath = path.join(pdfsDir, book.file_path);
-        if (fs.existsSync(pdfPath)) {
-          try {
-            fs.unlinkSync(pdfPath);
-            console.log('Deleted PDF file:', pdfPath);
-          } catch (fileError) {
-            console.error('Error deleting PDF file:', fileError);
-          }
-        }
-      }
-    }
 
     res.json({ success: true, message: "Book deleted successfully" });
   } catch (err) {
